@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Registe for Bloger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Loading Bootstrap -->
+  <link href="css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Loading Flat UI -->
+  <link href="css/flat-ui.min.css?88" rel="stylesheet">
+   <link href="css/demo.css" rel="stylesheet">
+  <link rel="shortcut icon" href="img/favicon.ico">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/vendor/html5shiv.js"></script>
+      <script src="js/vendor/respond.min.js"></script>
+      <![endif]-->
+    </head>
+    <body>
+      <div class="container">
+        <h1 class="demo-headline">Welcome, Bloger!</h1>
+
+        <div class="login">
+          <div class="login-screen">
+            <div class="login-icon">
+              <img src="img/login/icon.png" alt="Welcome to Bloger" title="previewImg"/>
+              <h4>Welcome to <small>Bloger</small></h4>
+            </div>
+
+            <div class="login-form">
+              <form method="POST" action="{{.url}}" enctype="multipart/form-data">
+                <div class="form-group">
+                  <input type="text" name="nickname" class="form-control login-field" value="" placeholder="Enter your nickname" id="login-name" />
+                  <label class="login-field-icon fui-user" for="login-name"></label>
+                </div>
+
+                <div class="form-group">
+                  <input type="text" name="email" class="form-control login-field" value="{{.email}}" placeholder="Enter your email" id="login-name" />
+                  <label class="login-field-icon fui-user" for="login-name"></label>
+                </div>
+  
+                <div class="form-group">
+                  <input type="password" name="password" class="form-control login-field" value="" placeholder="Password" id="login-pass" />
+                  <label class="login-field-icon fui-lock" for="login-pass"></label>
+                </div>
+  
+                <div class="form-group">
+                  <input type="file" name="picture" class="form-control login-field" />
+                  <label class="login-field-icon fui-user" for="login-name"></label>
+                  <script>
+                    var fileInput = document.querySelector('input[type=file]'),
+                            previewImg = document.querySelector('img');
+                    fileInput.addEventListener('change', function () {
+                        var file = this.files[0];
+                        var reader = new FileReader();
+                        // 监听reader对象的的onload事件，当图片加载完成时，把base64编码賦值给预览图片
+                        reader.addEventListener("load", function () {
+                            previewImg.src = reader.result;
+                        }, false);
+                        // 调用reader.readAsDataURL()方法，把图片转成base64
+                        reader.readAsDataURL(file);
+                    }, false);
+                  </script>
+                </div>
+                <div class="form-group">
+                  <textarea type="text" name="description" class="form-control login-field">please input your description</textarea>
+                  <label class="login-field-icon fui-user" for="login-name"></label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Registe for Bloger</button>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+      <script src="js/vendor/jquery.min.js"></script>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="js/vendor/video.js"></script>
+      <script src="js/flat-ui.min.js"></script>
+
+    </body>
+    </html>

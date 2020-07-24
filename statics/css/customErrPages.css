@@ -1,0 +1,353 @@
+/* default override */
+* {
+	box-sizing: border-box;
+}
+::-moz-selection {
+	background: #fbfbfb;
+	color: #3b2c1a;
+	text-shadow: none;
+}
+::selection {
+	background: #fbfbfb;
+	color: #3b2c1a;
+	text-shadow: none;
+}
+body {
+	margin: 0;
+	padding: 0;
+}
+span.onlineMedics {
+	top: 18px;
+	right: 20px;
+}
+/* big background */
+.overlay {
+	height: 100vh;
+	/*background-image:  linear-gradient(rgba(4, 35, 44, 0.7), rgba(54, 33, 5, 0.8)), url('../images/static/white-sands-o.jpg');*/
+	background-image:  linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, .9)), url('../images/static/white-sands-o.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center center;
+	background-size: cover;
+}
+
+/* error container */
+.err-container {
+	/*  background-image: linear-gradient(rgba(13, 126, 117, 0.3), rgba(103, 60, 15, 0.2)), url('../images/static/white-sands-more-blur-o.png');*/
+	background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('../images/static/white-sands-more-blur-o.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center center;
+	background-size: cover;
+	filter: blur(15px);
+	margin-top: 120px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 5px;
+	/*box-shadow: 0px 25px 25px 8px rgba(38, 19, 8, 0.2);*/
+	box-shadow: 0px 25px 25px 8px rgba(0, 0, 0, 0.2);
+	padding: 70px 0;
+	height: 320px;
+}
+.inner-row.row {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.left-col,
+.right-col {
+	float: left;
+}
+
+
+/* left side */
+.left-col {
+	font-family: 'Abel', sans-serif;
+	text-align: center;
+	border-right: 2px solid #db62ae;
+	margin-top: 4px;
+	user-select: none;
+}
+.left-col h1 {
+	color: #d9d3c9;
+	line-height: 1em;
+	font-size: 150px;
+	margin-bottom: 0;
+	margin-top: -8px;
+	/*text-shadow: 1px 1px 3px rgba(167, 167, 167, 0.3);*/
+}
+.left-col p {
+	margin: 0;
+	font-size: 20px;
+	letter-spacing: 2px;
+	position: relative;
+	top: -2px;
+	margin-bottom: 6px;
+	color: #d962ad;
+}
+.sad-face {
+	position: relative;
+	/*top: 2px;*/
+}
+
+
+/* right side */
+.right-col {
+	font-family: 'Open Sans', sans-serif;
+}
+#map {
+	width: 60px;
+	/*fill: #e8b817;*/
+	fill: #db62ae;
+	display: inline-block;
+	position: relative;
+	top: -18px;
+}
+#lock {
+	width: 47px;
+	/* fill: #e8b817; */
+	fill: #db62ae;
+	display: inline-block;
+	position: relative;
+	top: -11px;
+}
+#switch {
+	width: 60px;
+	/* fill: #e8b817; */
+	fill: #db62ae;
+	display: inline-block;
+	position: relative;
+	top: -11px;
+}
+.lost {
+	display: inline-block;
+	font-size: 45px;
+	color: #d9d3c9;
+	position:   relative;
+	left: 10px;
+	top: -1px;
+	font-family: "Abel", sans-serif;
+}
+.denied {
+	display: inline-block;
+	font-size: 45px;
+	color: #d9d3c9;
+	position: relative;
+	left: 10px;
+	font-family: "Abel", sans-serif;
+    top: 10px;
+}
+.serverErr {
+	display: inline-block;
+	font-size: 45px;
+	color: #d9d3c9;
+	position: relative;
+	font-family: "Abel", sans-serif;
+    top: 10px;
+}
+.more-info {
+	color: #d9d3c9;
+	font-size: 16px;
+	font-weight: 300;
+}
+.more-info.links {
+	margin-bottom: 20px;
+}
+.btn-light {
+	color: #d9d3c9;
+	display: inline-block;
+	border: 1px solid #d9d3c9;
+	border-radius: 0;
+	margin-right: 15px;
+	transition: all 0.1s ease-in-out; 
+}
+.btn-light:hover,
+.btn-light:active,
+.btn-light:focus {
+	/*color: #3b2c1a;*/
+	color: #db62ae;
+	background-color: transparent;
+	border: 1px solid #db62ae;
+}
+
+
+/* Animation */
+@keyframes zoomInUp {
+	from {
+		opacity: 0;
+		transform: scale3d(.1, .1, .1) translate3d(0, 1000px, 0);
+		animation-timing-function: cubic-bezier(0.550, 0.055, 0.675, 0.190);
+	}
+
+	60% {
+		opacity: 1;
+		transform: scale3d(.475, .475, .475) translate3d(0, -60px, 0);
+		animation-timing-function: cubic-bezier(0.175, 0.885, 0.320, 1);
+	}
+}
+
+.zoomInUp {
+	animation: zoomInUp 1s linear;
+}
+
+.no-select {
+	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
+
+/* Responsive */
+@media screen and (max-width: 1160px) {
+
+	/* error container */
+	.err-container {
+		box-shadow: 0px 15px 15px 8px rgba(0, 0, 0, 0.2);
+		padding: 68px 0;
+		height: 270px;
+	}
+	/* left side */
+	.left-col h1 {
+		font-size: 100px;
+		margin-bottom: 0;
+		margin-top: -2px;
+	}
+	/* right side */
+	#map {
+	    width: 40px;
+    	top: -10px;
+	}
+	#lock {
+	    width: 35px;
+    	top: -15px;
+	}
+	#switch {
+		width: 30px;
+		top: -3px;
+	}
+	.lost, .denied {
+		font-size: 35px;
+		left: 10px;
+		top: -1px;
+	}
+	.denied {
+		margin-bottom: 0;
+	}
+	.serverErr {
+		font-size: 25px;
+		top: 4px;
+	    left: 10px;
+	}
+	.more-info {
+		font-size: 14px;
+	}
+	.more-info.links {
+		margin-bottom: 10px;
+	}
+}
+
+@media screen and (max-width: 991px) {
+
+	/* error container */
+	.err-container {
+		padding: 25px 15px 30px;
+		height: auto;
+	}
+	.left-col {
+		border: none;
+	}
+	/* left side */
+	.left-col h1 {
+		font-size: 70px;
+		letter-spacing: 1px;
+	}
+	.left-col p {
+	    font-size: 18px;
+	    letter-spacing: 1px;
+	    position: relative;
+        margin-bottom: 25px;
+	}
+	.left-col p:after {
+		content: "";
+	    display: block;
+	    position: absolute;
+	    left: 50%;
+	    transform: translateX(-50%);
+	    top: 40px;
+	    width: 200px;
+	    height: 1px;
+	    background-color: #db62ae;
+	}
+	/* right side */
+	#map {
+		width: 40px;
+	    top: -11px;
+	}
+	#lock {
+		width: 33px;
+    	top: -14px;
+	}
+	#switch {
+		width: 30px;
+		top: -3px;
+	}
+	.serverErr {
+		margin-bottom: 15px;
+	}
+	.more-info.links {
+		margin-bottom: 15px;
+	}
+}
+
+@media screen and (max-width: 767px) {
+
+	/* error container */
+	.err-container {
+		padding: 20px 10px 25px;
+		box-shadow: none;
+		height: auto;
+		width: 92%;
+    	margin: 90px 4%;
+	}
+	.left-col {
+		text-align: center;
+	}
+	/* left side */
+	.left-col h1 {
+		font-size: 50px;
+	}
+	.left-col p {
+        margin-bottom: 20px;
+	}
+	.left-col p:after {
+	    top: 30px;
+	    width: 70%;
+	}
+	/* right side */
+	.serverErr {
+		top: 5px;
+		left: 2px;
+	}
+	.not-found {
+		top: -2px;
+		left: 2px;
+	}
+	.serverErr,
+	.not-found,
+	.denied {
+		font-size: 25px;
+	}
+	.more-info {
+		font-weight: 400;
+	}
+	
+}
+
+@media screen and (max-width: 480px) {
+	a.btn-light {
+	    width: 100%;
+	    margin-bottom: 10px;
+	}
+	.navbar-brand img.app-logo {
+	    height: 23px;
+	}
+}

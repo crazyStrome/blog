@@ -1,0 +1,36 @@
+{# app/Resources/TwigBundle/views/Exception/error404.html.twig #}
+{% extends 'MedAppBundle::base.html.twig' %}
+{% trans_default_domain 'MedAppBundle' %}
+{% block title %}MedApp - 403{% endblock title %}
+{% block stylesheets %}
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+    <link type="text/css" rel="stylesheet" href="{{ asset('dist/css/customErrPages.min.css') }}">
+{% endblock stylesheets %}
+{% block body %}
+    {{parent()}}
+
+        <div class="overlay">
+        <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 err-container zoomInUp">
+            <div class="inner-row row">
+                <div class="col-md-4 col-sm-12 col-xs-12 left-col">
+                    <h1 class="no-select">500</h1>
+                    <p class="no-select">
+                    <span class="sad-face">&#9785;</span> server error
+                    </p>
+                </div>
+                <div class="col-md-8 col-sm-12 col-xs-12 right-col">
+                    <svg id="switch" class="no-select" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 32 32">
+                    <path d="M15.5 31.062c-6.904 0-12.5-5.597-12.5-12.5 0-5.315 3.323-9.844 8-11.651v4.449c-2.399 1.503-4 4.162-4 7.202 0 4.694 3.806 8.5 8.5 8.5s8.5-3.806 8.5-8.5c0-2.596-1.166-4.915-3-6.475v-4.736c4.143 2.036 7 6.284 7 11.212 0 6.903-5.597 12.499-12.5 12.499zM16 17.062c-1.104 0-2-0.896-2-2v-11.124c0-1.104 0.896-2 2-2s2 0.896 2 2v11.125c0 1.104-0.896 1.999-2 1.999z"></path>
+                    </svg>
+                    <p class="serverErr">Something went wrong</p>
+                    <p class="more-info links">
+                        Please try to refresh the page and if it still doesn't work, let us know. We'll solve the problem as soon as possible. 
+                    </p>
+                    <a href="{{ path('main_page') }}" class="btn btn-light no-select">Home</a>
+                    <a href="{{ path('main_page') }}?action=login" class="btn btn-light no-select">Login</a>
+                    <a href="{{ path('medapp_contact') }}" class="btn btn-light no-select">Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
