@@ -6,7 +6,7 @@ import (
 )
 // GenerateUUID 生成UUID
 func GenerateUUID() string {
-	u1 := uuid.Must(uuid.NewV4())
+	u1 := uuid.Must(uuid.NewV4(), nil)
 	return u1.String()
 }
 // EncodePassword 加密密码
