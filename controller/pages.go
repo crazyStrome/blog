@@ -9,6 +9,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"encoding/json"
+	"blog/service"
 )
 
 // SetStatics 设置静态文件目录
@@ -25,6 +26,7 @@ func SetStatics(router *gin.Engine) {
 	router.Static("/plugins", "./statics/plugins")
 	router.Static("/src", "./statics/src")
 	router.Static("/picture", "./picture")
+	router.Static("/article", "./article")
 	router.StaticFile("test.md", "./statics/test.md")
 	router.StaticFile("editormd.js", "./statics/js/editormd.js")
 	router.StaticFile("favicon.ico", "./statics/img/favicon.ico")
@@ -46,6 +48,16 @@ func LoadPages(router *gin.Engine) {
 	router.GET("/editor", EditorPage)
 	router.GET("/error", ErrPage)
 	router.GET("/about", AboutPage)
+	router.GET("/getarticle", ArticlePage)
+}
+// ArticlePage 显示文章页
+func ArticlePage(c *gin.Context) {
+	id := c.Query("id")
+	if len(id) == 0 {
+		c.Redirect(http.StatusMovedPermanently, "/error?code=404")
+	}
+	fmt.Println(id)
+	c.HTML(http.StatusOK, "showarticle.html", nil)
 }
 
 // IndexPage 返回idex页面
@@ -61,13 +73,13 @@ func IndexPage(c *gin.Context) {
 	}
 	// fmt.Println(author)
 	var home = "/home"
-	var nick = ""
-	if len(author.Email) != 0 {
-		home = fmt.Sprintf("%s?id=%d", home, author.ID)
-		nick = author.Nick
-	}
+	// var nick = ""
+	// if len(author.Email) != 0 {
+	// 	home = fmt.Sprintf("%s?id=%d", home, author.ID)
+	// 	nick = author.Nick
+	// }
 	c.HTML(http.StatusOK, "index.html", gin.H{
-		"nick": nick,
+		"nick": author.Nick,
 		"login":  "/login",
 		"home":   home,
 		"registe": "/registe",
@@ -97,12 +109,34 @@ func HomePage(c *gin.Context) {
 	} else {
 		c.Redirect(http.StatusMovedPermanently, "/error?code=403")
 	}
+	articleids := service.GetArticleIDListByAuthorID(author.ID)
+	fmt.Println(articleids)
+
+	arraynum := len(articleids)/3
+	if len(articleids)%3 != 0 {
+		arraynum ++
+	}
+
+	articlesmap := make([][]model.Article, arraynum)
+	var idx = 0
+	for i := 0; i < arraynum; i ++ {
+		articlesmap[i] = make([]model.Article, 0)
+		for j := 0; j < 3 && idx < len(articleids); j ++ {
+			article, err := service.GetArticleByID(articleids[idx])
+			idx ++
+			if err != nil {
+				continue
+			}
+			articlesmap[i] = append(articlesmap[i], article)
+		}
+	}
 
 	c.HTML(200, "home.html", gin.H{
 		"author": author,
 		"editor": "/editor",
 		"about": "/about",
-		"headpicture": "picture/2a679803-06c5-4599-8d57-0e5387a8dfc1.JPG",
+		"headpicture": author.Picture,
+		"articlesmap": articlesmap,
 	})	
 }
 
@@ -140,7 +174,18 @@ func ErrPage(c *gin.Context) {
 // EditorPage 返回编辑器页面，使用markdown
 func EditorPage(c *gin.Context) {
 	// code := c.Query("code")
-	c.HTML(http.StatusOK, "editor.html", nil)
+	var author model.Author
+	session := sessions.Default(c)
+	if session.Get("author") != nil {
+		json.Unmarshal([]byte(session.Get("author").(string)), &author)
+	} else {
+		c.Redirect(http.StatusMovedPermanently, "/error?code=403")
+	}
+	c.HTML(http.StatusOK, "editor.html", gin.H{
+		"url": "/savearticle",
+		"nick": author.Nick,
+		"home": "/home",
+	})
 }
 // AboutPage 关于作者信息
 func AboutPage(c *gin.Context) {

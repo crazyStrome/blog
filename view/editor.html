@@ -2,128 +2,89 @@
 <html lang="zh">
     <head>
         <meta charset="utf-8" />
-        <title>Full example - Editor.md examples</title>
-        <link rel="stylesheet" href="css/style.css" />
-        <link rel="stylesheet" href="../css/editormd.css" />   
+        <title>editor</title>
+        <link rel="stylesheet" href="css/styleforeditor.css?2" />
+        <link rel="stylesheet" href="css/editormd.css?3" />   
         <link rel="shortcut icon" href="https://pandao.github.io/editor.md/favicon.ico" type="image/x-icon" />
-        <style>            
-            /*.editormd-preview-theme-dark {
-                color: #777;
-                background:#2C2827;
-            }
-            
-            .editormd-preview-theme-dark .editormd-toc-menu > .markdown-toc {
-                background:#fff;
-                border:none;
-            }
-            
-            .editormd-preview-theme-dark .editormd-toc-menu > .markdown-toc h1{
-                border-color:#ddd;
-            }
-            
-            .editormd-preview-theme-dark .markdown-body h1,
-            .editormd-preview-theme-dark .markdown-body h2,
-            .editormd-preview-theme-dark .markdown-body hr {
-                border-color: #222;
-            }
-            
-            .editormd-preview-theme-dark .editormd-preview-container  blockquote {
-                color: #555;
-                border-color: #333;
-                background: #222;
-                padding: 0.5em;
-            }
-            
-            .editormd-preview-theme-dark .editormd-preview-container abbr {
-                background:#ff9900;
-                color: #fff;
-                padding: 1px 3px;
-                border-radius: 3px; 
-            }
-            
-            .editormd-preview-theme-dark .editormd-preview-container code {
-                background: #5A9600;
-                color: #fff;
-                border: none;
-                padding: 1px 3px;
-                border-radius: 3px; 
-            }
-            
-            .editormd-preview-theme-dark .editormd-preview-container table {
-                border: none;
-            }
-            
-            .editormd-preview-theme-dark .editormd-preview-container .fa-emoji {
-                color: #B4BF42;
-            }
-            
-            .editormd-preview-theme-dark .editormd-preview-container .katex {
-                color: #FEC93F;
-            }
-            
-            .editormd-preview-theme-dark [class*=editormd-logo] {
-                color: #2196F3;
-            }
-            
-            .editormd-preview-theme-dark .sequence-diagram text {
-                fill: #fff;
-            }
-            
-            .editormd-preview-theme-dark .sequence-diagram rect, 
-            .editormd-preview-theme-dark .sequence-diagram path {
-                color:#fff;
-                fill : #64D1CB;
-                stroke : #64D1CB;
-            }
-            
-            .editormd-preview-theme-dark .flowchart rect, 
-            .editormd-preview-theme-dark .flowchart path {
-                stroke : #A6C6FF;
-            }
-            
-            .editormd-preview-theme-dark .flowchart rect {
-                fill: #A6C6FF;
-            }
-            
-            .editormd-preview-theme-dark .flowchart text {
-                fill: #5879B4;
-            }*/
-        </style>     
+
+        <!-- //文本框特效 -->
+        <!-- <link rel="stylesheet" type="text/css" href="css/awsomestyle.css"> -->
+
+          <!-- Loading Flat UI
+        <link href="css/flat-ui.min-for-login.css" rel="stylesheet">
+        <link href="css/demo.css" rel="stylesheet"> -->
     </head>
     <body>
-        <div id="layout">
+        <div id="layout" style="overflow-y: visible;">
+            
             <header>
-                <h1>完整示例</h1>
-                <p>Full example</p>
-                <ul style="margin: 10px 0 0 18px;">
-                    <li>Enable HTML tags decode</li>
-                    <li>Enable TeX, Flowchart, Sequence Diagram, Emoji, FontAwesome, Task lists</li>
-                    <li>Enable Image upload</li>
-                    <li>Enable [TOCM], Search Replace, Code fold</li>
-                </ul>            
+                {{$null := ""}}
+                {{if ne .nick $null}}
+                <a href="{{.home}}" style="color: black;"><h1>Hi, {{.nick}}~</h1></a>
+                {{end}}         
             </header>
-            <div class="btns">
-                <button id="goto-line-btn">Goto line 90</button>
-                <button id="show-btn">Show editor</button>
-                <button id="hide-btn">Hide editor</button>
-                <button id="get-md-btn">Get Markdown</button>
-                <button id="get-html-btn">Get HTML</button>
-                <button id="watch-btn">Watch</button>
-                <button id="unwatch-btn">Unwatch</button>
-                <button id="preview-btn">Preview HTML (Press Shift + ESC cancel)</button>
-                <button id="fullscreen-btn">Fullscreen (Press ESC cancel)</button>
-                <button id="show-toolbar-btn">Show toolbar</button>
-                <button id="close-toolbar-btn">Hide toolbar</button>
-                <button id="toc-menu-btn">ToC Dropdown menu</button>
-                <button id="toc-default-btn">ToC default</button>
-            </div>
-            <div id="test-editormd"></div>
+            <form method="POST" action="{{.url}}">
+                
+                <div class="btns">
+                    <input class="btn" type="text" name="title" id="titleline" placeholder="title?" size="50" style="height: 40px; width: 500px;font-size: large;"/>
+                    <br/>
+                    <br/>
+                    
+                    <button id="show-btn" type="button">Show editor</button>
+                    <button id="hide-btn" type="button">Hide editor</button>
+                    <button id="get-md-btn" type="button">Get Markdown</button>
+                    <button id="get-html-btn" type="button">Get HTML</button>
+                    <button id="watch-btn" type="button">Watch</button>
+                    <button id="unwatch-btn" type="button">Unwatch</button>
+                    <button id="preview-btn" type="button" title="(Press Shift + ESC cancel)">Preview HTML</button>
+                    <button id="fullscreen-btn" type="button" title="(Press ESC cancel)">Fullscreen</button>
+                    <button id="show-toolbar-btn" type="button">Show toolbar</button>
+                    <button id="close-toolbar-btn" type="button">Hide toolbar</button>
+                    <button id="toc-menu-btn" type="button">ToC Dropdown menu</button>
+                    <button id="toc-default-btn" type="button">ToC default</button>
+                    <button id="goto-line-btn" type="button">Goto line</button>
+                    <input type="number" id="linenumber" class="btn" size="5"  style="width: 80px"/>
+
+                    <button type="submit" style="background-color: deepskyblue;">Submit</button>
+                </div>
+                <div id="test-editormd"></div>
+                
+            </form>
         </div>
         <script src="js/jquery.min.js"></script>
-        <script src="../editormd.js"></script>   
+        <script src="js/editormd.js?11"></script>   
         <script type="text/javascript">
             var testEditor;
-            
+            function fake_click(obj) {
+                var ev = document.createEvent("MouseEvents");
+                ev.initMouseEvent(
+                "click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null
+                );
+                obj.dispatchEvent(ev);
+            }
+
+            function download(name, data) {
+                var urlObject = window.URL || window.webkitURL || window;
+
+                var downloadData = new Blob([data]);
+
+                var save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a")
+                save_link.href = urlObject.createObjectURL(downloadData);
+                save_link.download = name;
+                fake_click(save_link);
+            }
+            function uuid() {
+                var s = [];
+                var hexDigits = "0123456789abcdef";
+                for (var i = 0; i < 36; i++) {
+                    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+                }
+                s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+                s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+                s[8] = s[13] = s[18] = s[23] = "-";
+                var uuid = s.join("");
+                return uuid;
+            }
             $(function() {
                 
                 $.get('test.md', function(md){
@@ -131,9 +92,9 @@
                         width: "90%",
                         height: 740,
                         path : '../lib/',
-                        theme : "dark",
-                        previewTheme : "dark",
-                        editorTheme : "pastel-on-dark",
+                        // theme : "dark",
+                        // previewTheme : "dark",
+                        // editorTheme : "pastel-on-dark",
                         markdown : md,
                         codeFold : true,
                         //syncScrolling : false,
@@ -156,7 +117,7 @@
                         //dialogMaskBgColor : "#000", // 设置透明遮罩层的背景颜色，全局通用，默认为#fff
                         imageUpload : true,
                         imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-                        imageUploadURL : "./php/upload.php",
+                        imageUploadURL : "/upload",
                         onload : function() {
                             console.log('onload', this);
                             //this.fullscreen();
@@ -172,8 +133,17 @@
                 });
                 
                 $("#goto-line-btn").bind("click", function(){
-                    testEditor.gotoLine(90);
+                    var number = document.getElementById("linenumber").value;
+
+                    testEditor.gotoLine(parseInt(number));
                 });
+                $("#linenumber").keydown(function(event) {  
+                    if (event.keyCode == 13) {  
+                        var number = document.getElementById("linenumber").value;
+
+                        testEditor.gotoLine(parseInt(number));
+                    }  
+                })
                 
                 $("#show-btn").bind('click', function(){
                     testEditor.show();
@@ -184,11 +154,29 @@
                 });
                 
                 $("#get-md-btn").bind('click', function(){
-                    alert(testEditor.getMarkdown());
+                    // alert(testEditor.getMarkdown());
+                    var title = document.getElementById("titleline").value;
+                    
+                    var filename = "";
+                    if (title == "") {
+                        filename = uuid() + ".md";
+                    } else {
+                        filename = title + ".md"
+                    }
+                    download(filename, testEditor.getMarkdown());
                 });
                 
                 $("#get-html-btn").bind('click', function() {
-                    alert(testEditor.getHTML());
+                    // alert(testEditor.getHTML());
+                    var title = document.getElementById("titleline").value;
+                    
+                    var filename = "";
+                    if (title == "") {
+                        filename = uuid() + ".html";
+                    } else {
+                        filename = title + ".html"
+                    }
+                    download(filename, testEditor.getHTML());
                 });                
                 
                 $("#watch-btn").bind('click', function() {

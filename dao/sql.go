@@ -144,7 +144,7 @@ func AddArticle(article model.Article) int64 {
 
 // QueryArticleIDsByAuthorID 通过作者id获取文章列表
 func QueryArticleIDsByAuthorID(authorID int64) []int64 {
-	stmt, err := db.Prepare("SELECT * FROM map_author_article WHERE authorid = ?")
+	stmt, err := db.Prepare("SELECT articleid FROM map_author_article WHERE authorid = ?")
 	if err != nil {
 		log.Println(err)
 		return []int64{}

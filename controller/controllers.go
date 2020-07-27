@@ -1,6 +1,9 @@
 package controller
 
 import (
+	"time"
+	// "io/ioutil"
+	// "io"
 	"blog/model"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -9,6 +12,7 @@ import (
 	"fmt"
 	"encoding/json"
 	"strings"
+	// "os"
 )
 // LoadControllers 加载所有controller
 func LoadControllers(router *gin.Engine) {
@@ -17,6 +21,74 @@ func LoadControllers(router *gin.Engine) {
 	router.POST("/logincontroller", LoginController)
 	router.POST("/registecontroller", RegisteController)
 	router.POST("/lostcontroller", LostPasswordController)
+	router.POST("/upload", UploadController)
+	router.POST("/savearticle", SaveArticle)
+}
+// SaveArticle 储存文章
+func SaveArticle(c *gin.Context) {
+	content := c.PostForm("test-editormd-markdown-doc")
+	title := c.PostForm("title")
+
+	var author model.Author
+	session := sessions.Default(c)
+	if session.Get("author") != nil {
+		json.Unmarshal([]byte(session.Get("author").(string)), &author)
+	} else {
+		c.Redirect(http.StatusMovedPermanently, "/error?code=403")
+		return
+	}
+	filename, err := service.SaveArticle(content)
+	if err != nil {
+		c.Redirect(http.StatusMovedPermanently, "/error?code=503")
+		return
+	}
+	article := model.Article{
+		Title: title,
+		Destination: filename,
+		Timestep: time.Now(),
+	}
+	articleid := service.AddArticle(article)
+	if articleid < 0 {
+		c.Redirect(http.StatusMovedPermanently, "/error?code=403")
+		return
+	}
+	line := service.MapAuthorIDAndArticleID(author.ID, articleid)
+	if line < 0 {
+		c.Redirect(http.StatusMovedPermanently, "/error?code=403")
+		return
+	}
+	c.Redirect(http.StatusMovedPermanently, "/home")
+}
+// UploadController markdown上传图片处理器
+func UploadController(c *gin.Context) {
+	form, _ := c.MultipartForm()
+	for k := range form.File {
+		fmt.Println(k)
+	}
+	fileheader := form.File["editormd-image-file"][0]
+	fmt.Println(fileheader.Size)
+	file, err := fileheader.Open()
+	if err != nil {
+		c.Redirect(http.StatusMovedPermanently, "/error&code=403")
+	}
+	response, err := service.UploadToSMMS(generateSaveFile(fileheader.Filename, service.GenerateUUID()), file)
+	if err != nil {
+		c.Redirect(http.StatusMovedPermanently, "/error&code=403")
+	}
+	fmt.Println(response)
+	if response.Success {
+		c.JSON(http.StatusOK, gin.H{
+			"success": 1,
+			"message": response.Message,
+			"url": response.Data.URL,
+		})
+	} else {
+		c.JSON(http.StatusOK, gin.H{
+			"success": 0,
+			"message": "something wrong",
+			"url": response.Data.URL,
+		})
+	}
 }
 // LoginController 登陆controller
 func LoginController(c *gin.Context) {

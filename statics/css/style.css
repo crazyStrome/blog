@@ -147,11 +147,15 @@ body {
   animation: zoomInUp 1s linear;
 }
 .btns {
-  padding-top: 0;
+  padding-top: 10px;
+  padding-left: 60px;
+  padding-right: 30px;
+  padding-bottom: 10px;
 }
 
 .btns button {
   padding: 2px 8px;
+
 }
 
 #layout > header > h1 {
@@ -160,11 +164,11 @@ body {
 }
 
 .btns button, .btn {
-  padding: 8px 10px;
+  padding: 3px 5px;
   background: #fff;
   border: 1px solid #ddd;
-  /* -webkit-border-radius: 3px; */
-  /* border-radius: 3px; */
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
   cursor: pointer;
   -webkit-transition: background 300ms ease-out;
   transition: background 300ms ease-out;
