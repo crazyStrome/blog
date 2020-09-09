@@ -158,7 +158,21 @@ func QueryArticleIDsByAuthorID(authorID int64) []int64 {
 	}
 	return res
 }
-
+// QueryMapIDByArticleIDAndAuthorID 通过articleid和authorid验证是否匹配
+func QueryMapIDByArticleIDAndAuthorID(articleid int64, authorid int64) int64 {
+	stmt, err := db.Prepare("SELECT id FROM map_author_article WHERE authorid=? AND articleid=?")
+	if err != nil {
+		log.Println("QueryMapIDByArticleIDAndAuthorID", err)
+		return -1
+	}
+	var res int64
+	err = stmt.QueryRow(authorid, articleid).Scan(&res)
+	if err != nil {
+		log.Println("QueryMapIDByArticleIDAndAuthorID", err)
+		return -1
+	}
+	return res
+}
 // AddMapAuthorIDAndArticleID 添加作者和文章的映射
 func AddMapAuthorIDAndArticleID(authorID, articleID int64) int64 {
 	stmt, err := db.Prepare("INSERT INTO map_author_article(authorid, articleid) values(?, ?)")

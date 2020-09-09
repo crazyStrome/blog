@@ -20,3 +20,11 @@ func GetArticleByID(articleid int64) (article model.Article, err error) {
 func AddArticle(article model.Article) int64 {
 	return dao.AddArticle(article)
 }
+// VertifyArticleByArticleIDAndAuthorID 验证文章是否是该作者的
+func VertifyArticleByArticleIDAndAuthorID(authorid int64, articleid int64) bool {
+	id := dao.QueryMapIDByArticleIDAndAuthorID(articleid, authorid)
+	if id == -1 {
+		return false
+	}
+	return true
+}

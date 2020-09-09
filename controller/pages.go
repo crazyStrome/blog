@@ -3,7 +3,9 @@ package controller
 import (
 	"blog/model"
 	"fmt"
+	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-contrib/sessions"
 
@@ -52,12 +54,33 @@ func LoadPages(router *gin.Engine) {
 }
 // ArticlePage 显示文章页
 func ArticlePage(c *gin.Context) {
-	id := c.Query("id")
+	id := c.Query("articleid")
 	if len(id) == 0 {
 		c.Redirect(http.StatusMovedPermanently, "/error?code=404")
 	}
-	fmt.Println(id)
-	c.HTML(http.StatusOK, "showarticle.html", nil)
+	articleid, err := strconv.ParseInt(id, 10, 64)
+	if err != nil {
+		log.Println(err)
+		c.Redirect(http.StatusMovedPermanently, "/error?code=304")
+	}
+	log.Println("ArticlePage", "articleid:" , articleid)
+	author := service.GetAuthorBySession(c)
+	log.Println("ArticlePage", "author:", author)
+	if !service.VertifyArticleByArticleIDAndAuthorID(author.ID, articleid) {
+		c.Redirect(http.StatusMovedPermanently, "/error?code=304")
+	}
+	article, err := service.GetArticleByID(articleid)
+	if err != nil {
+		log.Println("ArticlePage", err)
+		c.Redirect(http.StatusMovedPermanently, "/error?code=404")
+	}
+	log.Println("ArticlePage", "article:", article)
+	c.HTML(http.StatusOK, "showarticle.html", gin.H{
+		"author":  author,
+		"article": article,
+		"modify":  "/modify",
+		"home":    "/home",
+	})
 }
 
 // IndexPage 返回idex页面
@@ -137,6 +160,7 @@ func HomePage(c *gin.Context) {
 		"about": "/about",
 		"headpicture": author.Picture,
 		"articlesmap": articlesmap,
+		"articleurl": "/getarticle",
 	})	
 }
 

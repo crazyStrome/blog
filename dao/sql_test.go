@@ -2,6 +2,7 @@ package dao
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 )
 
@@ -21,4 +22,15 @@ func TestQueryAuthorById(t *testing.T) {
 	t.Log(author)
 	fmt.Println(author)
 	fmt.Println(AddAuthor(author))
+}
+func TestQueryMapIDByArticleIDAndAuthorID(t *testing.T) {
+	id := QueryMapIDByArticleIDAndAuthorID(6, 2)
+	fmt.Println(id)
+
+	a := "1"
+	b, err := strconv.ParseInt(a, 10, 64)
+	if err != nil {
+		t.Error(err)
+	}
+	fmt.Println(b)
 }

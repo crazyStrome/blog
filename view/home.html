@@ -25,7 +25,7 @@
     
     <link rel="stylesheet" href="css/flaticon.css">
     <link rel="stylesheet" href="css/icomoon.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styleforhome.css?11">
   </head>
   <body>
 
@@ -75,6 +75,7 @@
           				</div>
 					</div>
 					{{$nick := .author.Nick}}
+					{{$articleurl := .articleurl}}
 					{{range $idx, $articles := .articlesmap}}
     				<div class="row">
 						{{range $index, $article := $articles}}
@@ -84,9 +85,9 @@
 								<div class="text text-2 pt-2 mt-3">
 									<!-- <span class="category mb-3 d-block"><a href="#">Technology</a></span> -->
 									{{if ne $article.Title ""}}
-									  <h3 class="mb-4"><a href="#">{{$article.Title}}</a></h3>
+									  <h3 class="mb-4"><a href="{{$articleurl}}?articleid={{$article.ID}}">{{$article.Title}}</a></h3>
 									{{else}}
-									<h3 class="mb-4"><a href="#">{{$nick}}' article-{{$idx}}-{{$index}}</a></h3>
+									<h3 class="mb-4"><a href="{{$articleurl}}?articleid={{$article.ID}}">{{$nick}}' article-{{$idx}}-{{$index}}</a></h3>
 									{{end}}
 	              					<div class="author mb-4 d-flex align-items-center">
 	            					<!-- <a href="#" class="img" style="background-image: url(images/person_2.jpg);"></a> -->
@@ -181,8 +182,8 @@
   <script src="js/bootstrap-datepicker.js"></script>
   <script src="js/jquery.timepicker.min.js"></script>
   <script src="js/scrollax.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-  <script src="js/google-map.js"></script>
+{{/*  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>*/}}
+{{/*  <script src="js/google-map.js"></script>*/}}
   <script src="js/main.js"></script>
     
   </body>

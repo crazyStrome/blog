@@ -1,5 +1,7 @@
 package service
 import (
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
 	"github.com/satori/go.uuid"
 	"crypto/md5"
 	"encoding/hex"
@@ -100,4 +102,15 @@ func SaveArticle(content string) (string, error) {
 		return "", err
 	}
 	return filename, nil
+}
+// GetAuthorBySession 通过session获取author
+func GetAuthorBySession(c *gin.Context) model.Author{
+	session := sessions.Default(c)
+	var author model.Author
+	if session.Get("author") != nil {
+		// author = session.Get("author").(model.Author)
+		// fmt.Printf("%T", session.Get("author"))
+		json.Unmarshal([]byte(session.Get("author").(string)), &author)
+	}
+	return author
 }

@@ -23,6 +23,10 @@ func LoadControllers(router *gin.Engine) {
 	router.POST("/lostcontroller", LostPasswordController)
 	router.POST("/upload", UploadController)
 	router.POST("/savearticle", SaveArticle)
+	router.POST("/savemodify", ModifyController)
+}
+func ModifyController(c *gin.Context) {
+
 }
 // SaveArticle 储存文章
 func SaveArticle(c *gin.Context) {
